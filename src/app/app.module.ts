@@ -10,10 +10,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -48,6 +50,7 @@ import { LeaderService } from './services/leader.service';
     AppRoutingModule,
     FlexLayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     MatToolbarModule,
     MatListModule,
     MatGridListModule,
@@ -57,6 +60,8 @@ import { LeaderService } from './services/leader.service';
     MatDialogModule,
     MatFormFieldModule,
     MatCheckboxModule,
+    MatSelectModule,
+    MatSlideToggleModule,
     BrowserAnimationsModule,
   ],
   providers: [

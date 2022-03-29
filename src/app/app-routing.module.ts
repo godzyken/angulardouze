@@ -11,9 +11,9 @@ import { LeaderDetailsComponent } from './leader-details/leader-details.componen
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'menu', component: MenuComponent},
-  {path: 'dish-details/:id', component: DishDetailsComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
+  {path: 'dish-details/:id', component: DishDetailsComponent},
   {path: '', redirectTo: '/home', pathMatch: 'full'}
 ];
 
