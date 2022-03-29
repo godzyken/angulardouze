@@ -10,5 +10,5 @@ export class Dish {
   label: string = 'label';
   price: string = '0€';
   description: string = 'description';
-  comments: any = new Comment();
+  comments: Comment[] = [];
 }

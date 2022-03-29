@@ -5,7 +5,7 @@ $background-pale: #D1C4E9;
 
 @mixin zero-margin($pad-up-down, $pad-left-right) {
   margin: 0px auto;
-  padding: $pad-up-down $padding-left-right;
+  padding: $pad-up-down $pad-left-right;
 }
 
 .footer{

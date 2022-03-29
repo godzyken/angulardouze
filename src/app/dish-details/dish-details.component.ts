@@ -1,57 +1,31 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Params, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 import { Dish } from '../shared/dish';
-
-const DISH = {
-  id: '0',
-  name: 'Uthappizza',
-  image: '/assets/images/uthappizza.png',
-  category: 'mains',
-  featured: true,
-  label: 'Hot',
-  price: '4.99',
-  // tslint:disable-next-line:max-line-length
-  description: 'A unique combination of Indian Uthappam (pancake) and Italian pizza, topped with Cerignola olives, ripe vine cherry tomatoes, Vidalia onion, Guntur chillies and Buffalo Paneer.',
-  comments: [
-    {
-       rating: 5,
-       comment: 'Imagine tes papilles, vivre une confusion!',
-       author: 'John Doeuf',
-       date: '2022-03-25T15:15:15.556094Z'
-    },
-    {
-       rating: 5,
-       comment: 'Point rescouss avant le repas chez la bel doch',
-       author: 'Sully VanVite',
-       date: '2022-03-25T17:57:28.556094Z'
-    },
-    {
-       rating: 5,
-       comment: 'Sa good bon!!',
-       author: 'Michael Keal',
-       date: '2022-03-26T12:27:07.556094Z'
-    },
-    {
-       rating: 5,
-       comment: 'Bide explosé, ça mérite son dû!',
-       author: 'Léo Zeproot',
-       date: '2022-03-27T21:57:00.556094Z'
-    },
-  ]
-};
+import { DishService } from '../services/dish.service';
 
 @Component({
   selector: 'app-dish-details',
   templateUrl: './dish-details.component.html',
-  styleUrls: ['./dish-details.component.css'],
+  styleUrls: ['./dish-details.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class DishDetailsComponent implements OnInit {
 
-  dish = DISH;
+  dish?: Dish;
 
-  constructor() { }
+  constructor(
+  private dishService: DishService,
+  private location: Location,
+  private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    let id = this.route.snapshot.params['id'];
+    this.dish = this.dishService.getDish(id);
   }
 
+  goBack(): void {
+    this.location.back();
+  }
 }
