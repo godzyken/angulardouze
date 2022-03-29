@@ -6,6 +6,7 @@ import { MenuComponent } from './menu/menu.component';
 import { DishDetailsComponent } from './dish-details/dish-details.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
+import { LeaderDetailsComponent } from './leader-details/leader-details.component';
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
