@@ -22,8 +22,19 @@ export class DishDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     let id = this.route.snapshot.params['id'];
-    this.dishService.getDish(id).then((dish) => this.dish = dish);
+    this.dishService.getDish(id).subscribe((dish) => this.dish = dish);
   }
+
+/*   operator => .pipe(
+    switchMap(
+      (params: Params) => this.dishService
+        .getDish(+params['id'])
+    ).subscribe(
+      dish => {
+        this.dish = dish;
+        this.setPrevNextDish(dish.id);
+      }
+    ); */
 
   goBack(): void {
     this.location.back();
