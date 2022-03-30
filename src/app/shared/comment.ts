@@ -1,6 +1,8 @@
 export class Comment {
-  rating: number = 0;
-  comment: string = 'comment';
-  author: string = ' author';
-  date: string = '2022-03-25T15:15:15.556094Z';
+  rating?: number;
+  comment?: string;
+  author?: string;
+  date?: string;
 }
+
+export const Rating = [0, 1, 2, 3, 4];

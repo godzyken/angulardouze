@@ -12,11 +12,13 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppRoutingModule } from './app-routing.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -50,6 +52,7 @@ import { LeaderService } from './services/leader.service';
     BrowserModule,
     AppRoutingModule,
     FlexLayoutModule,
+    FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
     MatToolbarModule,
@@ -63,8 +66,10 @@ import { LeaderService } from './services/leader.service';
     MatCheckboxModule,
     MatSelectModule,
     MatSlideToggleModule,
+    MatSliderModule,
     MatProgressSpinnerModule,
     BrowserAnimationsModule,
+    FontAwesomeModule,
   ],
   providers: [
     DishService,

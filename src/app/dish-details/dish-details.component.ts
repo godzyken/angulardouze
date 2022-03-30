@@ -1,9 +1,13 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+
+import { FormBuilder, FormGroup, Validators , NgForm} from '@angular/forms';
+import { Comment } from '../shared/comment';
 
 @Component({
   selector: 'app-dish-details',
@@ -17,12 +21,39 @@ export class DishDetailsComponent implements OnInit {
   dishIds?: string[];
   prev?: string;
   next?: string;
+  iconLeft = faChevronLeft;
+  currentDate = new Date();
+
+  comment!: Comment;
+  commentForm!: FormGroup;
+
+  @ViewChild('cform') commentFormDirective!: NgForm;
+
+    formErrors?: {[key: string]: string } = {
+      'author': '',
+      'comment': '',
+    };
+
+    validationComments?: {[key: string]: any } = {
+      'author': {
+        'required': 'Author name is required.',
+        'minlength': 'Author name must be at least 2 characters long.',
+        'maxlength': 'Author name cannot be more than 25 characters long.'
+      },
+      'comment': {
+        'required': 'Comment is required.'
+      }
+    };
+
 
   constructor(
   private dishService: DishService,
   private location: Location,
-  private route: ActivatedRoute
-  ) { }
+  private route: ActivatedRoute,
+  private fb: FormBuilder
+  ) {
+     this.createForm();
+   }
 
   ngOnInit(): void {
     this.dishService.getDishIds().subscribe((dishIds) => this.dishIds = dishIds);
@@ -34,10 +65,72 @@ export class DishDetailsComponent implements OnInit {
       });
   }
 
+  createForm(): void {
+    this.commentForm = this.fb.group({
+      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
+      comment: ['', Validators.required],
+      rating: 0,
+      date: '',
+    });
+
+    this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
+
+    this.onValueChanged();
+  }
+
+  onSubmit(): void {
+
+    this.commentForm.value.date = this.currentDate.toISOString();
+    this.comment = this.commentForm.value;
+    console.log(this.comment);
+
+    this.dish!.comments.push(this.comment);
+
+    this.commentForm.reset({
+      author: '',
+      comment: '',
+      rating: 0,
+      data: '',
+    });
+
+    this.commentFormDirective.resetForm();
+  }
+
+  onValueChanged(data?: any): void {
+    if (!this.commentForm) {
+      return;
+    }
+    const form = this.commentForm;
+    for (const field in this.formErrors) {
+      if (this.formErrors.hasOwnProperty(field)) {
+        // clear previous error message (if any)
+        this.formErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const comments = this.validationComments![field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              this.formErrors[field] += comments[key] + '';
+            }
+          }
+        }
+      }
+    }
+
+  }
+
   setPrevNextDish(dishId: string) {
     const index = this.dishIds!.indexOf(dishId);
     this.prev = this.dishIds![(this.dishIds!.length + index - 1) % this.dishIds!.length];
     this.next = this.dishIds![(this.dishIds!.length + index + 1) % this.dishIds!.length];
+  }
+
+  formatRating(value: number) {
+    if(value >= 5) {
+      return Math.round(value / 5) + 'rate';
+    }
+
+    return value;
   }
 
   goBack(): void {
