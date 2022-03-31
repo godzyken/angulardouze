@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Inject } from '@angular/core';
 import { Params, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Dish } from '../shared/dish';
@@ -50,7 +50,8 @@ export class DishDetailsComponent implements OnInit {
   private dishService: DishService,
   private location: Location,
   private route: ActivatedRoute,
-  private fb: FormBuilder
+  private fb: FormBuilder,
+  @Inject('BaseUrl') public BaseUrl: string
   ) {
      this.createForm();
    }
@@ -63,6 +64,8 @@ export class DishDetailsComponent implements OnInit {
         this.dish = dish;
         this.setPrevNextDish(dish.id);
       });
+    this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    this.onValueChanged();
   }
 
   createForm(): void {

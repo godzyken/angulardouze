@@ -64,7 +64,7 @@
     <mat-list role="list">
       <mat-list-item role="listitem" *ngFor="let leader of leaders" (click)="onSelect(leader)">
         <mat-icon mat-list-icon>
-          <img mat-card-avatar src="{{leader.image}}" alt="{{leader.name}}">
+          <img mat-card-avatar src="{{BaseUrl + leader.image}}" alt="{{leader.name}}">
         </mat-icon>
         <div mat-line>{{leader.name | uppercase}} {{leader.abbr | uppercase}}</div>
         <div mat-line>{{leader.designation}}</div>

@@ -13,7 +13,7 @@
           <h3 *ngIf="dish">{{ dish.name | uppercase }}</h3>
         </mat-card-title>
       </mat-card-header>
-      <img mat-card-image src="{{dish.image}}" alt="{{dish.name}}">
+      <img mat-card-image src="{{BaseUrl + dish.image}}" alt="{{dish.name}}">
       <mat-card-content>
         <p>{{ dish.description}} </p>
       </mat-card-content>
@@ -59,9 +59,9 @@
          *ngIf="commentForm.value.author">
       <mat-list fxFlex>
         <mat-list-item>
-          <p matLine> <span>{{ commentForm.value.comment }}</span></p>
-          <p matLine> <span>{{ commentForm.value.rating }} stars</span></p>
-          <p matLine> <span>{{ commentForm.value.author }} {{ commentForm.value.date }}</span></p>
+          <p matLine><span>{{ commentForm.value.comment }}</span></p>
+          <p matLine><span>{{ commentForm.value.rating }} stars</span></p>
+          <p matLine><span>{{ commentForm.value.author }} {{ commentForm.value.date }}</span></p>
         </mat-list-item>
       </mat-list>
     </div>
@@ -77,7 +77,9 @@
          fxLayoutGap="10px"
          fxLayoutGap.xs="0">
       <h3>Let your Comments</h3>
+<!-- // Test unitaires
       <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p>
+-->
 
       <form novalidate [formGroup]="commentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
         <p>

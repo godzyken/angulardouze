@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { Leader } from '../shared/leader';
 import { LeaderService } from '../services/leader.service';
 
@@ -14,7 +14,10 @@ export class AboutComponent implements OnInit {
 
   selectedLeader?: Leader;
 
-  constructor(private leaderService: LeaderService) { }
+  constructor(
+  private leaderService: LeaderService,
+  @Inject('BaseUrl') public BaseUrl: string
+  ) { }
 
   ngOnInit(): void {
     this.leaderService.getLeaders().subscribe(leaders => this.leaders = leaders);

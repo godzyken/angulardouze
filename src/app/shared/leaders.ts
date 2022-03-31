@@ -4,7 +4,7 @@ export const LEADERS: Leader[] = [
  {
    id: '0',
    name: 'Boss Ramen',
-   image: '/assets/images/ichiraku.png',
+   image: 'images/ichiraku.png',
    designation: 'Chief Epicurious Officer',
    abbr: 'CEO',
    featured: false,
@@ -14,7 +14,7 @@ export const LEADERS: Leader[] = [
  {
    id: '1',
    name: 'Dhanasekaran Witherspoon',
-   image: '/assets/images/ichiraku.png',
+   image: 'images/ichiraku.png',
    designation: 'Chief Food Officer',
    abbr: 'CFO',
    featured: false,
@@ -24,7 +24,7 @@ export const LEADERS: Leader[] = [
  {
    id: '2',
    name: 'Agumbe Tang',
-   image: '/assets/images/ichiraku.png',
+   image: 'images/ichiraku.png',
    designation: 'Chief Taste Officer',
    abbr: 'CTO',
    featured: false,
@@ -34,7 +34,7 @@ export const LEADERS: Leader[] = [
  {
    id: '3',
    name: 'Ichiraku Teuchi',
-   image: '/assets/images/ichiraku.png',
+   image: 'images/ichiraku.png',
    designation: 'Executive Chef',
    abbr: 'EC',
    featured: true,
