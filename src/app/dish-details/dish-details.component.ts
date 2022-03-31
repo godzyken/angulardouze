@@ -8,12 +8,27 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 
 import { FormBuilder, FormGroup, Validators , NgForm} from '@angular/forms';
 import { Comment } from '../shared/comment';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-dish-details',
   templateUrl: './dish-details.component.html',
   styleUrls: ['./dish-details.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('visibility', [
+      state('shown', style({
+        transform: 'scale(1.0)',
+        opacity: 1
+      })),
+      state('hidden',  style({
+        transform: 'scale(0.5)',
+        opacity: 0
+      })),
+      transition('* => *', animate('0.5s ease-in-out'))
+      ]
+    )
+  ]
 })
 export class DishDetailsComponent implements OnInit {
 
@@ -28,6 +43,7 @@ export class DishDetailsComponent implements OnInit {
   comment!: Comment;
   commentForm!: FormGroup;
   dishCopy?: Dish;
+  visibility = 'shown';
 
   @ViewChild('cform') commentFormDirective!: NgForm;
 
@@ -61,11 +77,17 @@ export class DishDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.dishService.getDishIds().subscribe((dishIds) => this.dishIds = dishIds);
     this.route.params
-      .pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
+      .pipe(switchMap(
+        (params: Params) => {
+          this.visibility = 'hidden';
+          return this.dishService.getDish(params['id']);
+        }
+      ))
       .subscribe(dish => {
         this.dish = dish;
         this.dishCopy = dish;
         this.setPrevNextDish(dish.id);
+        this.visibility = 'shown';
       },
         errmess => this.errorMessage = <any>errmess
       );

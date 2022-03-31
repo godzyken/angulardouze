@@ -24,9 +24,9 @@
         </address>
         <p></p>
         <div>
-          <a mat-raised-button href="tel:+330661712773"><i class="fa fa-phone"> Call</i></a>
-          <a mat-raised-button><i class="fa fa-skype"></i> Skype</a>
-          <a mat-raised-button href="mailto:isgodzy@gmail.com"><i class="fa fa-envelope-o"> Email</i></a>
+          <a mat-raised-button href="tel:+330661712773" appHighlight><i class="fa fa-phone"> Call</i></a>
+          <a mat-raised-button appHighlight><i class="fa fa-skype"></i> Skype</a>
+          <a mat-raised-button href="mailto:isgodzy@gmail.com" appHighlight><i class="fa fa-envelope-o"> Email</i></a>
         </div>
       </div>
       <div fxFlex="40">
@@ -42,31 +42,31 @@
 
     <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
       <p>
-        <mat-form-field class="half-width">
+        <mat-form-field class="half-width" appHighlight>
           <input matInput type="text" formControlName="firstname" placeholder="First Name" required>
           <mat-error *ngIf="formErrors!['firstname']">{{ formErrors!['firstname'] }}</mat-error>
         </mat-form-field>
-        <mat-form-field class="half-width">
+        <mat-form-field class="half-width" appHighlight>
           <input matInput type="text" formControlName="lastname" placeholder="Last Name" required>
           <mat-error *ngIf="formErrors!['lastname']">{{ formErrors!['lastname'] }}</mat-error>
         </mat-form-field>
       </p>
       <p>
-        <mat-form-field class="half-width">
+        <mat-form-field class="half-width" appHighlight>
           <input matInput type="tel" formControlName="telnum" placeholder="Tel. Number" pattern="[0-9]*" required>
           <mat-error *ngIf="formErrors!['telnum']">{{ formErrors!['telnum'] }}</mat-error>
         </mat-form-field>
-        <mat-form-field class="half-width">
+        <mat-form-field class="half-width" appHighlight>
           <input matInput type="email" formControlName="email" placeholder="Email">
           <mat-error *ngIf="formErrors!['email']">{{ formErrors!['email'] }}</mat-error>
         </mat-form-field>
       </p>
       <table class="form-size">
         <td>
-          <mat-slide-toggle formControlName="agree">May we contact you?</mat-slide-toggle>
+          <mat-slide-toggle formControlName="agree" appHighlight>May we contact you?</mat-slide-toggle>
         </td>
         <td>
-          <mat-select placeholder="How?" formControlName="contacttype">
+          <mat-select placeholder="How?" formControlName="contacttype" appHighlight>
             <mat-option *ngFor="let ctype of contactType" [value]="ctype">
               {{ ctype }}
             </mat-option>
@@ -74,13 +74,13 @@
         </td>
       </table>
       <p>
-        <mat-form-field class="full-width">
+        <mat-form-field class="full-width" appHighlight>
             <textarea matInput formControlName="message" placeholder="Your Feedback" rows="12">
             </textarea>
         </mat-form-field>
       </p>
       <button type="submit" mat-button class="background-primary text-floral-white"
-              [disabled]="feedbackForm.invalid">Submit
+              [disabled]="feedbackForm.invalid" appHighlight>Submit
       </button>
     </form>
   </div>

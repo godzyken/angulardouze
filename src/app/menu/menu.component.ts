@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-menu',

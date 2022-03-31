@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Inject } from '@angular/core';
 import { Leader } from '../shared/leader';
 
 @Component({
@@ -11,7 +11,9 @@ export class LeaderDetailsComponent implements OnInit {
   @Input()
   leader?:Leader;
 
-  constructor() { }
+  constructor(
+    @Inject('BaseUrl') public BaseUrl: string
+  ) { }
 
   ngOnInit(): void {
 

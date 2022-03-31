@@ -6,7 +6,7 @@
      fxLayoutGap="10px"
      fxLayoutGap.xs="0">
 
-  <div fxFlex="40" *ngIf="dish">
+  <div fxFlex="40" *ngIf="dish" appHighlight [@visibility]="visibility">
     <mat-card>
       <mat-card-header>
         <mat-card-title>
@@ -19,13 +19,13 @@
       </mat-card-content>
       <mat-card-actions>
         <button md-button [routerLink]="['/dish-details', prev]">
-          <fa-icon [icon]="iconLeft">PREVIEW</fa-icon>
+          <fa-icon [icon]="iconLeft" appHighlight>PREVIEW</fa-icon>
         </button>
-        <button md-button (click)="goBack()">BACK</button>
-        <button md-button>LIKE</button>
-        <button md-button>SHARE</button>
+        <button md-button (click)="goBack()" appHighlight>BACK</button>
+        <button md-button appHighlight>LIKE</button>
+        <button md-button appHighlight>SHARE</button>
         <button md-button [routerLink]="['/dish-details', next]">
-          <span class="fa fa-chevron-right fa-lg">NEXT</span>
+          <span class="fa fa-chevron-right fa-lg" appHighlight>NEXT</span>
         </button>
       </mat-card-actions>
     </mat-card>
@@ -38,10 +38,10 @@
        fxLayoutGap.xs="0">
     <div fxFlex="50"
          fxLayoutAlign.gt-md="stretch center"
-         *ngIf="dish">
+         *ngIf="dish" [@visibility]="visibility">
       <mat-list fxFlex>
         <h3>Comments</h3>
-        <mat-list-item *ngFor="let Comments of dish.comments">
+        <mat-list-item *ngFor="let Comments of dish.comments" appHighlight>
           <p matLine>
             <span>{{Comments.comment}}</span>
           </p>
@@ -56,7 +56,7 @@
     </div>
     <div fxFlex="50"
          fxLayoutAlign.gt-md="stretch center"
-         *ngIf="commentForm.value.author">
+         *ngIf="commentForm.value.author" appHighlight>
       <mat-list fxFlex>
         <mat-list-item>
           <p matLine><span>{{ commentForm.value.comment }}</span></p>
@@ -88,7 +88,7 @@
 
       <form novalidate [formGroup]="commentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
         <p>
-          <mat-form-field class="half-width">
+          <mat-form-field class="half-width" appHighlight>
             <input matInput type="text" formControlName="author" placeholder="Author" required>
             <mat-error *ngIf="formErrors!['author']">{{ formErrors!['author'] }}</mat-error>
           </mat-form-field>
@@ -101,15 +101,15 @@
           step="1"
           min="1"
           max="5"
-          aria-label="units"></mat-slider>
+          aria-label="units" appHighlight></mat-slider>
         <p>
-          <mat-form-field class="full-width">
+          <mat-form-field class="full-width" appHighlight>
             <textarea matInput formControlName="comment" placeholder="Your Comment" rows="5">
             </textarea>
           </mat-form-field>
         </p>
         <button type="submit" mat-button class="background-primary text-floral-white"
-                [disabled]="commentForm.invalid">Send
+                [disabled]="commentForm.invalid" appHighlight>Send
         </button>
       </form>
 

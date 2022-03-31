@@ -6,21 +6,21 @@
      fxLayoutGap="10px"
      fxLayoutGap.xs="0">
 
-  <div fxFlex="40" *ngIf="leader">
+  <div fxFlex="40" *ngIf="leader" appHighlight>
     <mat-card>
       <mat-card-header>
         <mat-card-title>
           <h3>{{ leader.name | uppercase }}</h3>
         </mat-card-title>
       </mat-card-header>
-      <img mat-card-image src="{{leader.image}}" alt="{{leader.name}}">
-      <mat-card-content>
+      <img mat-card-image src="{{BaseUrl + leader.image}}" alt="{{leader.name}}">
+      <mat-card-content appHighlight>
         <p>{{ leader.designation}} </p><br>
         <p>{{ leader.description}} </p>
       </mat-card-content>
       <mat-card-actions>
-        <button md-button>LIKE</button>
-        <button md-button>SHARE</button>
+        <button md-button appHighlight>LIKE</button>
+        <button md-button appHighlight>SHARE</button>
       </mat-card-actions>
     </mat-card>
   </div>
