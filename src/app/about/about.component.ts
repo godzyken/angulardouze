@@ -11,6 +11,7 @@ import { LeaderService } from '../services/leader.service';
 export class AboutComponent implements OnInit {
 
   leaders?:Leader[];
+  leadersErrMess?:string;
 
   selectedLeader?: Leader;
 
@@ -20,7 +21,11 @@ export class AboutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.leaderService.getLeaders().subscribe(leaders => this.leaders = leaders);
+    this.leaderService.getLeaders()
+    .subscribe(
+      leaders => this.leaders = leaders,
+      errmess => this.leadersErrMess = <any>errmess
+    );
   }
 
   onSelect(leader: Leader) {

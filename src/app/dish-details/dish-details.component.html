@@ -65,10 +65,15 @@
         </mat-list-item>
       </mat-list>
     </div>
-    <div fxFlex [hidden]="dish">
+    <div fxFlex [hidden]="dish || errorMessage">
       <mat-spinner></mat-spinner>
       <h4>Loading...Please Wait</h4>
     </div>
+    <div fxFlex *ngIf="errorMessage">
+      <h2>Error</h2>
+      <h4>{{errorMessage}}</h4>
+    </div>
+
     <div fxFlex
          fxLayout="column"
          fxLayout.sm="column"
@@ -77,9 +82,9 @@
          fxLayoutGap="10px"
          fxLayoutGap.xs="0">
       <h3>Let your Comments</h3>
-<!-- // Test unitaires
-      <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p>
--->
+      <!-- // Test unitaires
+            <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p>
+      -->
 
       <form novalidate [formGroup]="commentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
         <p>
@@ -109,6 +114,7 @@
       </form>
 
     </div>
+
   </div>
 
 </div>

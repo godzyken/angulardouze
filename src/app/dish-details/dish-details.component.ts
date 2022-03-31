@@ -19,6 +19,7 @@ export class DishDetailsComponent implements OnInit {
 
   dish?: Dish;
   dishIds?: string[];
+  errorMessage?: string;
   prev?: string;
   next?: string;
   iconLeft = faChevronLeft;
@@ -26,6 +27,7 @@ export class DishDetailsComponent implements OnInit {
 
   comment!: Comment;
   commentForm!: FormGroup;
+  dishCopy?: Dish;
 
   @ViewChild('cform') commentFormDirective!: NgForm;
 
@@ -62,8 +64,11 @@ export class DishDetailsComponent implements OnInit {
       .pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
       .subscribe(dish => {
         this.dish = dish;
+        this.dishCopy = dish;
         this.setPrevNextDish(dish.id);
-      });
+      },
+        errmess => this.errorMessage = <any>errmess
+      );
     this.commentForm.valueChanges.subscribe(data => this.onValueChanged(data));
     this.onValueChanged();
   }
@@ -87,7 +92,15 @@ export class DishDetailsComponent implements OnInit {
     this.comment = this.commentForm.value;
     console.log(this.comment);
 
-    this.dish!.comments.push(this.comment);
+    this.dishCopy!.comments.push(this.comment);
+    this.dishService.putDish(this.dishCopy!)
+      .subscribe(dish => {
+        this.dish = dish;
+        this.dishCopy = dish;
+      },
+       errmess => {
+        this.errorMessage = <any>errmess;
+       });
 
     this.commentForm.reset({
       author: '',
