@@ -42,21 +42,21 @@ export class DishDetailsComponent implements OnInit {
 
   @ViewChild('cform') commentFormDirective!: NgForm;
 
-    formErrors?: {[key: string]: string } = {
-      'author': '',
-      'comment': '',
-    };
+  formErrors?: {[key: string]: string } = {
+    'author': '',
+    'comment': '',
+  };
 
-    validationComments?: {[key: string]: any } = {
-      'author': {
-        'required': 'Author name is required.',
-        'minlength': 'Author name must be at least 2 characters long.',
-        'maxlength': 'Author name cannot be more than 25 characters long.'
-      },
-      'comment': {
-        'required': 'Comment is required.'
-      }
-    };
+  validationComments?: {[key: string]: any } = {
+    'author': {
+      'required': 'Author name is required.',
+      'minlength': 'Author name must be at least 2 characters long.',
+      'maxlength': 'Author name cannot be more than 25 characters long.'
+    },
+    'comment': {
+      'required': 'Comment is required.'
+    }
+  };
 
 
   constructor(
@@ -92,9 +92,9 @@ export class DishDetailsComponent implements OnInit {
 
   createForm(): void {
     this.commentForm = this.fb.group({
-      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
-      comment: ['', Validators.required],
       rating: 0,
+      comment: ['', Validators.required],
+      author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       date: '',
     });
 
@@ -120,10 +120,10 @@ export class DishDetailsComponent implements OnInit {
        });
 
     this.commentForm.reset({
-      author: '',
-      comment: '',
       rating: 0,
-      data: '',
+      comment: '',
+      author: '',
+      date: '',
     });
 
     this.commentFormDirective.resetForm();

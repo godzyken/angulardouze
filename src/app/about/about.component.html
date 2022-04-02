@@ -58,11 +58,12 @@
   </div>
 
 
-  <div fxFlex *ngIf="leaders" [@expand]>
+  <div fxFlex *ngIf="leaders">
     <h2>Corporate Leadership</h2>
 
     <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let leader of leaders" (click)="onSelect(leader)" appHighlight>
+      <mat-list-item role="listitem" *ngFor="let leader of leaders" (click)="onSelect(leader)" appHighlight
+                     [@visibility]="visibility" [@expand]>
         <mat-icon mat-list-icon>
           <img mat-card-avatar src="{{BaseUrl + leader.image}}" alt="{{leader.name}}">
         </mat-icon>

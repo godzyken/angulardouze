@@ -48,7 +48,7 @@ export class DishService {
 
     return this.http
       .put<Dish>(baseUrl + 'dishes/' + dish.id, dish, httpOptions)
-      .pipe(catchError(this.processHTTPMsgService.handleError));;
+      .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
 }

@@ -9,7 +9,7 @@
     </div>
   </div>
 
-  <div fxFlex *ngIf="dishes" [@expanded]>
+  <div fxFlex *ngIf="dishes" [@expanded] [@visibility]="visibility">
     <mat-grid-list cols="2" rowHeight="200px">
       <mat-grid-tile *ngFor="let dish of dishes" [routerLink]="['/dish-details', dish.id]" appHighlight>
         <img height="200px" src="{{BaseUrl + dish.image}}" alt="{{dish.name}}">

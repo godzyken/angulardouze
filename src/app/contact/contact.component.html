@@ -24,23 +24,38 @@
         </address>
         <p></p>
         <div>
-          <a mat-raised-button href="tel:+330661712773" appHighlight><i class="fa fa-phone"> Call</i></a>
-          <a mat-raised-button appHighlight><i class="fa fa-skype"></i> Skype</a>
-          <a mat-raised-button href="mailto:isgodzy@gmail.com" appHighlight><i class="fa fa-envelope-o"> Email</i></a>
+          <a mat-raised-button pButton href="tel:+330661712773" appHighlight><i class="fa fa-phone"> Call</i></a>
+          <a mat-raised-button pButton appHighlight><i class="fa fa-skype"></i> Skype</a>
+          <a mat-raised-button pButton href="mailto:isgodzy@gmail.com" appHighlight><i class="fa fa-envelope-o">
+            Email</i></a>
         </div>
       </div>
       <div fxFlex="40">
         <h4>Map of our Location</h4>
       </div>
+      <div fxFlex="50"
+           fxLayoutAlign.gt-md="stretch center"
+           *ngIf="feedbackForm.value.agree" appHighlight>
+        <mat-list fxFlex>
+          <mat-list-item>
+            <p matLine><span>{{ feedbackForm.value.firstname }}</span></p>
+            <p matLine><span>{{ feedbackForm.value.lastname }}</span></p>
+            <p matLine><span>{{ feedbackForm.value.email }} </span></p>
+            <p matLine><span>{{ feedbackForm.value.telnum }} </span></p>
+            <p matLine><span>{{ feedbackForm.value.messages }} </span></p>
+            <p matLine><span>{{ feedbackForm.value.agree }} </span></p>
+          </mat-list-item>
+        </mat-list>
+      </div>
     </div>
   </div>
   <div fxFlex fxFlexOffset="20px" class="form-size">
     <h3>Send us your Feedback</h3>
-<!-- // Test unitaires
-    <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
--->
+    <!--   // Test unitaires
+       <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>-->
 
-    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
+    <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()" [@visibility]="visibility"
+          [@expand]>
       <p>
         <mat-form-field class="half-width" appHighlight>
           <input matInput type="text" formControlName="firstname" placeholder="First Name" required>
@@ -75,13 +90,30 @@
       </table>
       <p>
         <mat-form-field class="full-width" appHighlight>
-            <textarea matInput formControlName="message" placeholder="Your Feedback" rows="12">
+            <textarea matInput formControlName="messages" placeholder="Your Feedback" rows="12">
             </textarea>
         </mat-form-field>
       </p>
-      <button type="submit" mat-button class="background-primary text-floral-white"
-              [disabled]="feedbackForm.invalid" appHighlight>Submit
+      <button type="submit" mat-button label="Submit" class="background-primary text-floral-white"
+              [disabled]="feedbackForm!.invalid" appHighlight>Submit
       </button>
     </form>
+  </div>
+  <div fxFlex [hidden]="feedbackForm" [@expand]>
+    <mat-spinner><h4>Loading . . . Please Wait</h4></mat-spinner>
+  </div>
+  <div fxFlex *ngIf="feedback" [@visibility]="visibility" [@expand]>
+    <h3>Your Submission:</h3>
+    <p><span>First Name: {{feedback?.firstName}}</span></p>
+    <p><span>Last Name: {{feedback?.lastName}}</span></p>
+    <p><span>Tel. Number: {{feedback?.telnum}}</span></p>
+    <p><span>Email: {{feedback?.email}}</span></p>
+    <p><span>Contact You?: {{feedback?.agree}}</span></p>
+    <p><span>How?: {{feedback?.contacttype}}</span></p>
+    <p><span>Feedback: {{feedback?.messages}}</span></p>
+  </div>
+  <div fxFlex *ngIf="errorMessage" [hidden]="errorMessage" [@expand]>
+    <h2>Error</h2>
+    <h4>{{errorMessage}}</h4>
   </div>
 </div>

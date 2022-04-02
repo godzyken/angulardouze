@@ -1,4 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { Params, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
 import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
 import { Promotion } from '../shared/promotion';
@@ -29,32 +32,53 @@ export class HomeComponent implements OnInit {
   promotionErrMess?:string;
   leader?:Leader;
   leaderErrMess?:string;
+  visibility = 'shown';
 
   constructor(
   private dishService: DishService,
   private promotionService: PromotionService,
   private leaderService: LeaderService,
+  private location: Location,
+  private route: ActivatedRoute,
   @Inject('BaseUrl') public BaseUrl: string
   ) { }
 
   ngOnInit(): void {
-    this.dishService.getFeaturedDish()
-      .subscribe(
-        (dish) => this.dish = dish,
+    this.route.params
+      .pipe(switchMap((params: Params) => {
+        this.visibility = 'hidden';
+        return this.dishService.getFeaturedDish();
+      }))
+      .subscribe(dish => {
+        this.dish = dish;
+        this.visibility = "shown";
+      },
         errmess => this.dishErrMess = <any>errmess
-      );
+    );
 
-    this.promotionService.getFeaturedPromotion()
-      .subscribe(
-        (promotion) => this.promotion = promotion,
-        errmess => this.promotionErrMess = <any>errmess
-      );
-
-    this.leaderService.getFeaturedLeader()
-      .subscribe(
-        (leader) => this.leader = leader,
+    this.route.params
+      .pipe(switchMap((params: Params) => {
+        this.visibility = 'hidden';
+        return this.leaderService.getFeaturedLeader();
+      }))
+      .subscribe(leader => {
+        this.leader = leader;
+        this.visibility = "shown";
+      },
         errmess => this.leaderErrMess = <any>errmess
-      );
+    );
+
+    this.route.params
+      .pipe(switchMap((params: Params) => {
+        this.visibility = 'hidden';
+        return this.promotionService.getFeaturedPromotion();
+      }))
+      .subscribe(promotion => {
+        this.promotion = promotion;
+        this.visibility = "shown";
+      },
+        errmess => this.promotionErrMess = <any>errmess
+    );
   }
 
 }

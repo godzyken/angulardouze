@@ -118,31 +118,3 @@
   </div>
 
 </div>
-<!--
- <div fxFlex="20"
-       fxLayout="column"
-       fxLayout.sm="column"
-       fxLayout.xs="column"
-       fxLayoutAlign.gt-md="end center">
-    <h3>Let your Comments</h3>
-    <p>{{ commentForm.value | json }} {{ commentForm.status | json }}</p>
-
-    <form novalidate [formGroup]="commentForm" #cform="ngForm" (ngSubmit)="onSubmit()">
-      <p>
-        <mat-form-field class="half-width">
-          <input matInput type="text" formControlName="author" placeholder="Author" required>
-          <mat-error *ngIf="formErrors!['author']">{{ formErrors!['author'] }}</mat-error>
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field class="full-width">
-            <textarea matInput formControlName="comment" placeholder="Your Comment" rows="5">
-            </textarea>
-        </mat-form-field>
-      </p>
-      <button type="submit" mat-button class="background-primary text-floral-white"
-              [disabled]="commentForm.invalid">Send
-      </button>
-    </form>
-
-  </div>-->

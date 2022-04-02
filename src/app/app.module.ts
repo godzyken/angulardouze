@@ -20,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { MenuComponent } from './menu/menu.component';
@@ -37,6 +38,8 @@ import { baseUrl } from './shared/baseUrl';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
+import { FeedbackService } from './services/feedback.service';
+
 import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 import { HighlightDirective } from './directives/highlight.directive';
 
@@ -77,11 +80,14 @@ import { HighlightDirective } from './directives/highlight.directive';
     BrowserAnimationsModule,
     FontAwesomeModule,
     HttpClientModule,
+    ButtonModule,
+    InputTextModule,
   ],
   providers: [
     DishService,
     PromotionService,
     LeaderService,
+    FeedbackService,
     ProcessHTTPMsgService,
     { provide: 'BaseUrl', useValue: baseUrl }
   ],

@@ -1,7 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators , NgForm} from '@angular/forms';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Inject } from '@angular/core';
+import { Params, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators , NgForm } from '@angular/forms';
+import { visibility, flyInOut, expand } from '../animations/app.animations';
 import { Feedback, ContactType } from '../shared/feedback';
-import { visibility, flyInOut } from '../animations/app.animations';
+import { FeedbackService } from '../services/feedback.service';
 
 @Component({
   selector: 'app-contact',
@@ -15,13 +19,22 @@ import { visibility, flyInOut } from '../animations/app.animations';
   animations: [
     visibility(),
     flyInOut(),
+    expand(),
   ],
 })
 export class ContactComponent implements OnInit {
 
-  feedbackForm!: FormGroup;
-  feedback!: Feedback;
+  feedback?: Feedback;
+  feedbackIds?: string[];
+  feedbacks?: Feedback[];
   contactType = ContactType;
+  errorMessage?: string;
+  prev?: string;
+  next?: string;
+
+  feedbackForm!: FormGroup;
+  feedbackCopy?: Feedback;
+  visibility = 'shown';
 
   @ViewChild('fform') feedbackFormDirective!: NgForm;
 
@@ -30,6 +43,7 @@ export class ContactComponent implements OnInit {
     'lastname': '',
     'telnum': '',
     'email': '',
+    'messages': '',
   };
 
   validationMessages?: {[key: string]: any } = {
@@ -50,14 +64,42 @@ export class ContactComponent implements OnInit {
     'email': {
       'required': 'Email address is required.',
       'email': 'Email address is not in valid format.',
+    },
+    'messages': {
+      'required': 'Message is required.',
     }
   };
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private feedbackService: FeedbackService,
+    private location: Location,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    @Inject('BaseUrl') public BaseUrl: string
+  ) {
     this.createForm();
    }
 
   ngOnInit(): void {
+    this.feedbackService.getFeedBackIds().subscribe((feedbackIds) => this.feedbackIds = feedbackIds);
+    this.route.params
+      .pipe(switchMap(
+        (params: Params) => {
+          console.log(this.feedback!.id);
+          this.visibility = 'hidden';
+          return this.feedbackService.getFeedBack(params['id']);
+        }
+      ))
+      .subscribe(feedback => {
+          this.feedback = feedback;
+          this.feedbackCopy = feedback;
+          this.setPrevNextFeedback(feedback.id);
+          this.visibility = 'shown';
+        },
+        errmess => this.errorMessage = <any>errmess
+      );
+    this.feedbackForm.valueChanges.subscribe(data => this.onValueChanged(data));
+    this.onValueChanged();
   }
 
   createForm(): void {
@@ -66,9 +108,9 @@ export class ContactComponent implements OnInit {
       lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)]],
       telnum: [0, [Validators.required, Validators.pattern]],
       email: ['', [Validators.required, Validators.email]],
-      agree: [false, Validators.required],
+      agree:[false, Validators.required],
       contacttype: ['None', Validators.required],
-      message: ['', Validators.required],
+      messages: ['', Validators.required],
     });
 
     this.feedbackForm.valueChanges.subscribe(data => this.onValueChanged(data));
@@ -78,7 +120,26 @@ export class ContactComponent implements OnInit {
 
   onSubmit(): void {
     this.feedback = this.feedbackForm.value;
+    this.feedback!.id = this.getRandomInt(1,1000000000000).toString();
     console.log(this.feedback);
+
+    this.feedbackCopy = this.feedback;
+
+    this.feedbackService.addFeedback(this.feedbackCopy!)
+      .subscribe(
+        feedback => {
+          this.feedback = feedback;
+          this.feedbackCopy = feedback;
+          this.visibility = 'shown';
+          setTimeout(() => {
+            this.visibility = 'hidden';
+          }, 5000);
+        },
+        errmess => {
+          this.errorMessage = <any>errmess;
+        }
+    );
+
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -86,7 +147,7 @@ export class ContactComponent implements OnInit {
       email: '',
       agree: false,
       contacttype: '',
-      message: '',
+      messages: '',
     });
     this.feedbackFormDirective.resetForm();
   }
@@ -111,6 +172,18 @@ export class ContactComponent implements OnInit {
         }
       }
     }
+  }
+
+  setPrevNextFeedback(feedbackId?: string) {
+    const index = this.feedbackIds!.indexOf(feedbackId!);
+    this.prev = this.feedbackIds?.[(this.feedbackIds?.length + index - 1) % this.feedbackIds?.length]
+    this.next = this.feedbackIds?.[(this.feedbackIds?.length + index + 1) % this.feedbackIds!.length]
+  }
+
+  getRandomInt(min:number, max:number): number {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
   }
 
 }

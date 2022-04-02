@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
+import { Params, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { switchMap } from 'rxjs/operators';
 import { Leader } from '../shared/leader';
 import { LeaderService } from '../services/leader.service';
 import { visibility, flyInOut, expand } from '../animations/app.animations';
@@ -20,21 +23,29 @@ import { visibility, flyInOut, expand } from '../animations/app.animations';
 })
 export class AboutComponent implements OnInit {
 
-  leaders?:Leader[];
+  leaders?: Leader[];
   leadersErrMess?:string;
 
   selectedLeader?: Leader;
+  visibility = 'shown';
 
   constructor(
-  private leaderService: LeaderService,
-  @Inject('BaseUrl') public BaseUrl: string
+    private route: ActivatedRoute,
+    private leaderService: LeaderService,
+    @Inject('BaseUrl') public BaseUrl: string
   ) { }
 
   ngOnInit(): void {
-    this.leaderService.getLeaders()
-    .subscribe(
-      leaders => this.leaders = leaders,
-      errmess => this.leadersErrMess = <any>errmess
+    this.route.params
+      .pipe(switchMap((params: Params) => {
+        this.visibility = 'hidden';
+        return this.leaderService.getLeaders();
+      }))
+      .subscribe(leaders => {
+        this.leaders = leaders;
+        this.visibility = "shown";
+      },
+        errmess => this.leadersErrMess = <any>errmess
     );
   }
 
