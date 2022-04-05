@@ -1,7 +1,7 @@
-// Karma configuration file, see link for more information
-// https://karma-runner.github.io/1.0/config/configuration-file.html
+// Karma configuration
+// Generated on Sat Apr 02 2022 20:54:40 GMT+0200 (heure d’été d’Europe centrale)
 
-module.exports = function (config) {
+module.exports = function(config) {
   config.set({
     basePath: '',
     frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -39,6 +39,7 @@ module.exports = function (config) {
     autoWatch: true,
     browsers: ['Chrome'],
     singleRun: false,
-    restartOnFileChange: true
+    restartOnFileChange: true,
+    concurrency: Infinity
   });
 };

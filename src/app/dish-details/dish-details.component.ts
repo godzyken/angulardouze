@@ -5,7 +5,6 @@ import { Dish } from '../shared/dish';
 import { DishService } from '../services/dish.service';
 import { switchMap } from 'rxjs/operators';
 import { faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-
 import { FormBuilder, FormGroup, Validators , NgForm} from '@angular/forms';
 import { Comment } from '../shared/comment';
 import { visibility, flyInOut, expand } from '../animations/app.animations';
@@ -39,6 +38,7 @@ export class DishDetailsComponent implements OnInit {
   commentForm!: FormGroup;
   dishCopy?: Dish;
   visibility = 'shown';
+  hostSelector?: '.mat-slider';
 
   @ViewChild('cform') commentFormDirective!: NgForm;
 
