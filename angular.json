@@ -107,6 +107,30 @@
             "scripts": [],
             "codeCoverage": true
           }
+        },
+        "ionic-cordova-serve": {
+          "builder": "@ionic/cordova-builders:cordova-serve",
+          "options": {
+            "cordovaBuildTarget": "my-first-project:ionic-cordova-build",
+            "devServerTarget": "my-first-project:serve"
+          },
+          "configurations": {
+            "production": {
+              "cordovaBuildTarget": "my-first-project:ionic-cordova-build:production",
+              "devServerTarget": "my-first-project:serve:production"
+            }
+          }
+        },
+        "ionic-cordova-build": {
+          "builder": "@ionic/cordova-builders:cordova-build",
+          "options": {
+            "browserTarget": "my-first-project:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "my-first-project:build:production"
+            }
+          }
         }
       }
     }

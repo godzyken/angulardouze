@@ -1,0 +1,7 @@
+{
+  "name": "restaurant confusion",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
